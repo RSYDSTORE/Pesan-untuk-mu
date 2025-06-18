@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Verifikasi Lisensi</h2>
+<form action="{{ url_for('process_login') }}" method="post">
+    <label for="auth_input">Masukkan Device ID / X-Auth:</label>
+    <input type="text" id="auth_input" name="auth_input" value="{{ device_id }}" required>
+    
+    {% if show_register_prompt and unregistered_id %}
+    <p style="color: red; font-weight: bold;">Lisensi Anda tidak terdaftar!</p>
+    <p>UserID Anda: <strong>{{ unregistered_id }}</strong></p>
+    <label for="user_name_for_license">Masukkan Nama Anda untuk permintaan lisensi:</label>
+    <input type="text" id="user_name_for_license" name="user_name_for_license" placeholder="Nama Anda" required>
+    <button type="submit" formaction="{{ url_for('contact_admin_from_unregistered') }}">Hubungi Admin untuk Beli Lisensi</button>
+    {% else %}
+    <input type="submit" value="Verifikasi & Login">
+    {% endif %}
+</form>
+{% endblock %}

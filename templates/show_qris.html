@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Pembayaran Perpanjangan Lisensi</h2>
+
+{% if qris_link and paket_nama %}
+    <p>Anda telah memilih paket perpanjangan: <strong>{{ paket_nama }}</strong></p>
+    <p>Silakan lakukan pembayaran melalui QRIS berikut:</p>
+    <div style="margin: 20px 0;">
+        <a href="{{ qris_link }}" target="_blank" class="button-link">Buka Gambar QRIS</a>
+    </div>
+
+    <h3>Instruksi Selanjutnya:</h3>
+    <p>Setelah berhasil melakukan pembayaran, mohon konfirmasi kepada admin untuk pengaktifan lisensi Anda.</p>
+    <p>Dan Mohon kirimkan bukti pembayaran kepada admin.</p>
+    <div style="margin: 20px 0;">
+        <a href="{{ wa_link }}" target="_blank" class="button-link" style="background-color: #25d366;">Konfirmasi Pembayaran ke Admin (WhatsApp)</a>
+    </div>
+    <p style="font-size: 0.9em; color: #aaa;">Link WhatsApp akan membuka aplikasi WhatsApp Anda.</p>
+{% else %}
+    <p>Informasi pembayaran tidak lengkap. Silakan coba lagi dari halaman perpanjangan lisensi.</p>
+{% endif %}
+
+<a href="{{ url_for('logout') }}" class="button-link logout-button">Keluar</a>
+<a href="{{ url_for('license_expired_page') }}" class="button-link back-button">Kembali ke Pilihan Paket</a>
+{% endblock %}

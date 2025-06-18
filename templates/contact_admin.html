@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Hubungi Admin</h2>
+<p>Anda akan dialihkan ke WhatsApp untuk menghubungi admin Rosyad Store.</p>
+<p>Pesankan permintaan lisensi baru Anda kepada admin.</p>
+
+<div style="margin: 20px 0;">
+    <a href="{{ wa_link }}" target="_blank" class="button-link" style="background-color: #25d366;">Buka WhatsApp untuk Hubungi Admin</a>
+</div>
+<p style="font-size: 0.9em; color: #aaa;">Link WhatsApp akan membuka aplikasi WhatsApp Anda.</p>
+
+<a href="{{ url_for('logout') }}" class="button-link logout-button">Keluar</a>
+<a href="{{ url_for('index') }}" class="button-link back-button">Kembali ke Halaman Utama</a>
+{% endblock %}
