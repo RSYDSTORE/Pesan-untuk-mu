@@ -1,0 +1,121 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="info-box">
+    <p><strong>Nama Lisensi:</strong> <span class="detail">{{ user_license_name }}</span></p>
+    <p><strong>Kedaluwarsa:</strong> <span class="detail">{{ expiry_date_part }}</span>
+    {% if expiry_days_part_raw %}<br><span class="detail" style="margin-left: 20px;">»----➤ {{ expiry_days_part_raw }}</span>{% endif %}
+    </p>
+    <p><strong>ID Lisensi:</strong> <span class="detail">{{ device_id_info }}</span></p>
+    <hr style="border-color: #6a00ff; margin: 15px 0;">
+    <p><strong>Pemilik:</strong> <span class="detail">ROSYAD STORE</span></p>
+    <p><strong>WhatsApp:</strong> <span class="detail">082120873066</span></p>
+    <p><strong>Telegram:</strong> <span class="detail">t.me/ROSYADSTORE02</span></p>
+    <p><strong>Channel YT:</strong> <span class="detail">ROSYAD STORE</span></p>
+</div>
+
+<div class="info-box" style="margin-top: 30px;">
+    <h3>Informasi Akun Game</h3>
+    <p><strong>👤 Nama Akun:</strong> <span class="detail">{{ nama_akun_mxx }}</span></p>
+    <p><strong>💰 Uang:</strong> <span class="detail">{{ "{:,.0f}".format(saldo_akun_mxx) }} RP</span></p>
+    <p><strong>⏲️ Jam:</strong> <span class="detail">{{ now.strftime('%H:%M:%S') }}</span></p>
+</div>
+
+<h3 class="menu-section-title">MENU TOP UP SALDO</h3>
+<form action="{{ url_for('process_action') }}" method="post" class="menu-grid">
+    {% for i in range(1, 16) %}
+        {% set value = {
+            1: 50000000, 2: 70000000, 3: 150000000, 4: 250000000,
+            5: 350000000, 6: 500000000, 7: 600000000, 8: 700000000,
+            9: 800000000, 10: 900000000, 11: 1000000000, 12: 1300000000,
+            13: 1600000000, 14: 1800000000, 15: 2147483647
+        }[i] %}
+        {% set display_text = "" %}
+        {% if i < 11 %}
+            {% set display_text = "TOPUP UANG " + ("{:,.0f}".format(value) | replace(",", ".") | replace(".00", "") | replace("000000", "JT") | replace("000000000", "M")) %}
+        {% elif i == 11 %}
+            {% set display_text = "TOPUP UANG 1M" %}
+        {% elif i == 12 %}
+            {% set display_text = "TOPUP UANG 1,3M" %}
+        {% elif i == 13 %}
+            {% set display_text = "TOPUP UANG 1,6M" %}
+        {% elif i == 14 %}
+            {% set display_text = "TOPUP UANG 1,8M" %}
+        {% elif i == 15 %}
+            {% set display_text = "TOPUP UANG 2M" %}
+        {% endif %}
+
+        <div class="menu-item">
+            <span>【{{ i }}】 {{ display_text }} ➤ 【VIP】</span>
+            {% if i >= 1 and i <= 10 %} {# Tambahkan input jumlah untuk opsi 1-10 #}
+                <input type="number" name="jumlah_{{ i }}" placeholder="Jumlah" value="1" min="1" style="width: 80px; margin-left: 10px;">
+            {% elif i >=11 and i <= 15 %} {# Untuk 1M ke atas, tidak ada input jumlah (default 1 proses) #}
+                <span style="font-size:0.8em; color:#aaa;">(1x Proses)</span>
+            {% endif %}
+            <button type="submit" name="pilihan" value="{{ i }}">Pilih</button>
+        </div>
+    {% endfor %}
+
+    <div class="menu-item">
+        <span>【16】 CUSTOM TOPUP ➤ 【VIP】</span>
+        <input type="number" name="nominal_16" placeholder="Nominal" style="width: 100px; margin-left: 10px;">
+        <input type="number" name="jumlah_16" placeholder="Jumlah" value="1" min="1" style="width: 80px; margin-left: 10px;">
+        <button type="submit" name="pilihan" value="16">Top Up</button>
+    </div>
+
+    <h3 class="menu-section-title">MENU KURAS SALDO</h3>
+    {% for i in range(17, 24) %}
+        {% set value = {
+            17: 5000000, 18: 10000000, 19: 50000000, 20: 100000000,
+            21: 1000000000, 22: 1500000000, 23: 2147483647
+        }[i] %}
+        {% set display_text = "" %}
+        {% if i < 21 %}
+            {% set display_text = "KURAS " + ("{:,.0f}".format(value) | replace(",", ".") | replace(".00", "") | replace("000000", "JT")) %}
+        {% elif i == 21 %}
+            {% set display_text = "KURAS 1M" %}
+        {% elif i == 22 %}
+            {% set display_text = "KURAS 1,5M" %}
+        {% elif i == 23 %}
+            {% set display_text = "KURAS 2M" %}
+        {% endif %}
+        
+        <div class="menu-item">
+            <span>【{{ i }}】 {{ display_text }} ➤ 【VIP】</span>
+            {% if i >= 17 and i <= 20 %} {# Tambahkan input jumlah untuk opsi 17-20 #}
+                <input type="number" name="jumlah_{{ i }}" placeholder="Jumlah" value="1" min="1" style="width: 80px; margin-left: 10px;">
+            {% elif i >=21 and i <= 23 %} {# Untuk 1M ke atas, tidak ada input jumlah (default 1 proses) #}
+                <span style="font-size:0.8em; color:#aaa;">(1x Proses)</span>
+            {% endif %}
+            <button type="submit" name="pilihan" value="{{ i }}">Pilih</button>
+        </div>
+    {% endfor %}
+
+    <div class="menu-item">
+        <span>【24】 CUSTOM KURAS ➤ 【VIP】</span>
+        <input type="number" name="nominal_24" placeholder="Nominal" style="width: 100px; margin-left: 10px;">
+        <input type="number" name="jumlah_24" placeholder="Jumlah" value="1" min="1" style="width: 80px; margin-left: 10px;">
+        <button type="submit" name="pilihan" value="24">Kuras</button>
+    </div>
+    <div class="menu-item">
+        <span>【25】 KURAS SEMUA UANG ➤ 【VIP】</span>
+        <button type="submit" name="pilihan" value="25">Pilih</button>
+    </div>
+
+    <h3 class="menu-section-title">MENU AKUN</h3>
+    <div class="menu-item">
+        <span>【26】 HAPUS AKUN ➤ 【VIP】</span>
+        <button type="submit" name="pilihan" value="26" onclick="return confirm('Apakah Anda yakin ingin menghapus akun ini? Tindakan ini tidak dapat dibatalkan!');">Pilih</button>
+    </div>
+    <div class="menu-item">
+        <span>【27】 GANTI NAMA AKUN ➤ 【VIP】</span>
+        <input type="text" name="nama_baru" placeholder="Nama Akun Baru" style="width: 150px; margin-left: 10px;">
+        <button type="submit" name="pilihan" value="27">Ganti</button>
+    </div>
+
+    <div class="menu-item">
+        <span>【0】 BATAL / KELUAR</span>
+        <button type="submit" name="pilihan" value="0" class="logout-button">Keluar</button>
+    </div>
+</form>
+{% endblock %}
